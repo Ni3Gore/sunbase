@@ -18,10 +18,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 	static final String UPDATE_QUERY = "update `customer_details` set `fname`=?, `lname`=?,`street`=?, `address`=?, `city`=?, `state`=?, `email`=?, `phone`=? where (`id`=?)";
 	static final String DELETE_QUERY = "DELETE FROM `customer_details` WHERE (`id`=?)";
 	static final String SELECT_QUERY = "SELECT * from `customer_details` ";
-	static final String SELECT_QUERY1 = "SELECT * from `customer_details` where `fname` = ? ";
-	static final String SELECT_QUERY2 = "SELECT * from `customer_details` where `city`=? ";
-	static final String SELECT_QUERY3 = "SELECT * from `customer_details` where `email`=? ";
-	static final String SELECT_QUERY4 = "SELECT * from `customer_details` where `phone` = ? ";
+	static final String SELECT_QUERY1 = "SELECT * from `customer_details` where `fname` Like ? ";
+	static final String SELECT_QUERY2 = "SELECT * from `customer_details` where `city`Like ? ";
+	static final String SELECT_QUERY3 = "SELECT * from `customer_details` where `email`Like ? ";
+	static final String SELECT_QUERY4 = "SELECT * from `customer_details` where `phone` Like ? ";
 	static final String SELECT_QUERY5 = "SELECT * from `customer_details` where `id` = ? ";
 
 	static private Connection connection;
@@ -113,7 +113,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		List<Customer> list = new ArrayList<Customer>();
 		try {
 			prepareStatement = connection.prepareStatement(SELECT_QUERY1);
-			prepareStatement.setString(1, fname.trim());
+			prepareStatement.setString(1, fname.trim()+"%");
 			res = prepareStatement.executeQuery();
 			while (res.next()) {
 				Customer customer = new Customer(res.getString("id"), res.getString("fname"), res.getString("lname"),
@@ -137,7 +137,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		List<Customer> list = new ArrayList<Customer>();
 		try {
 			prepareStatement = connection.prepareStatement(SELECT_QUERY2);
-			prepareStatement.setString(1, city.trim());
+			prepareStatement.setString(1,city.trim()+"%");
 			res =  prepareStatement.executeQuery();
 			while (res.next()) {
 				Customer customer = new Customer(res.getString("id"), res.getString("fname"), res.getString("lname"),
@@ -159,7 +159,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		List<Customer> list = new ArrayList<Customer>();
 		try {
 			prepareStatement = connection.prepareStatement(SELECT_QUERY3);
-			prepareStatement.setString(1, email.trim());
+			prepareStatement.setString(1, email.trim()+"%");
 			res = prepareStatement.executeQuery();
 			while (res.next()) {
 				Customer customer = new Customer(res.getString("id"), res.getString("fname"), res.getString("lname"),
@@ -182,7 +182,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 			List<Customer> list = new ArrayList<Customer>();
 		try {
 			prepareStatement = connection.prepareStatement(SELECT_QUERY4);
-			prepareStatement.setString(1, phone.trim());
+			prepareStatement.setString(1, phone.trim()+"%");
 			res = prepareStatement.executeQuery();
 			while (res.next()) {
 				Customer customer = new Customer(res.getString("id"), res.getString("fname"), res.getString("lname"),

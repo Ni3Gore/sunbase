@@ -1,4 +1,4 @@
-<%@page import="com.customer.model.Admin"%>
+
 <%@page import="com.customer.DAOImpl.CustomerDAOImpl"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.customer.DAO.CustomerDAO"%>
@@ -11,6 +11,14 @@
 </head>
 <body>
 	<h2>Customer List</h2>
+	<%
+	String message = (String)session.getAttribute("message");
+	if(message!=null && message.isEmpty()){
+		%>
+		<h3><%=message %></h3>
+		<%
+	}
+	%>
 
 	<%
 	List<Customer> allcustomers = (List<Customer>) session.getAttribute("Allcustomer");
@@ -42,6 +50,7 @@
 		<a href="Add.jsp"><button id="add-customer-btn">Add
 				Customer</button></a> 
 				<a href="edit?&action=sync"><input type="submit" value="Sync"></a>
+				<a href="logout"><input type="submit" value="logut" class=""></a>
 	</div>
 	<div class="search-dropdown">
 		<form action="edit">
@@ -53,12 +62,28 @@
 				<option value="Email">Email</option>
 				<option value="Phone">Phone</option>
 			</select> <input type="text" name="searchInput" id="search-input"
-				placeholder="Enter search term"> <input type="submit"
-				value="Search">
+				placeholder="Enter search term"> 
+				<input type="submit" value="Search">
 		</form>
-				<a href="logout"><input type="submit" value="logut" class=""></a>
 	</div>
+<script>
+		function showSearchBox() {
+			var selectedOption = document.getElementById("search-dropdown").value;
+			var searchInput = document.getElementById("search-input");
+			var button = document.getElementById("search-submit-btn");
 
+			if (selectedOption !== "") {
+				searchInput.style.display = "inline-block";
+				searchInput.placeholder = "Enter " + selectedOption
+						+ " to search";
+				button.style.display = "inline-block";
+			} else {
+				searchInput.style.display = "none";
+				button.style.display = "none";
+			}
+
+		}
+	</script>
 	<table>
 		<tr>
 			
@@ -90,10 +115,12 @@
 					onclick="return confirm('Are you sure you want to delete this customer?');"></a></td>
 
 		</tr>
+		
 		<%
 		}
 		%>
 	</table>
+	
 	<!-- Pagination links -->
 	<!-- Pagination links -->
 	<div class="pagination">
@@ -158,49 +185,6 @@
 	}
 	%>
 
-	<script>
-		function showSearchBox() {
-			var selectedOption = document.getElementById("search-dropdown").value;
-			var searchInput = document.getElementById("search-input");
-			var button = document.getElementById("search-submit-btn");
-
-			if (selectedOption !== "") {
-				searchInput.style.display = "inline-block";
-				searchInput.placeholder = "Enter " + selectedOption
-						+ " to search";
-				button.style.display = "inline-block";
-			} else {
-				searchInput.style.display = "none";
-				button.style.display = "none";
-			}
-
-		}
-
-		/* function confirmDelete() {
-		    var userResponse = confirm("Are you sure you want to delete this customer?");
-		    
-		    if (userResponse) {
-		        // User clicked 'Yes', perform the deletion
-		        deleteCustomer();
-		    } else {
-		        // User clicked 'No', do nothing or show a message
-		        alert("Deletion canceled. The customer record is safe.");
-		    }
-
-		    // Optionally, you can return the user's response if needed
-		    return userResponse;
-		}
-
-		function deleteCustomer() {
-		    // Code to delete the customer goes here
-		    // For example, you can make an AJAX request to the server to delete the record
-		    // Or perform any other necessary actions
-		   
-		} */
-
-		/* function confirmDelete() {
-			return confirm("Are you sure you want to delete this customer?");
-		} */
-	</script>
+	
 </body>
 </html>

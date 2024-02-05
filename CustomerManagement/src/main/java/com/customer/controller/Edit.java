@@ -47,11 +47,11 @@ public class Edit extends HttpServlet {
 			if (action.equals("edit")) {
 				edit(req, resp);
 			} else if (action.equals("Update")) {
-				update(req, resp);
+				update(req, resp,session);
 			} else if (action.equals("delete")) {
-				delete(req, resp);
+				delete(req, resp,session);
 			} else if (action.equals("Add")) {
-				add(req, resp);
+				add(req, resp, session);
 			} else if (action.equals("search")) {
 				search(req, resp);
 			} else if (action.equals("sync")) {
@@ -80,6 +80,7 @@ public class Edit extends HttpServlet {
 
 			Customer customerById = customerDAOImpl.getCustomerById(id);
 			Customer customer = new Customer(id, fname, lname, street, address, city, state, email, phone);
+			session.setAttribute("message", "All Customers Synced Successfully");
 			if (customerById == null) {
 				customerDAOImpl.addCustomer(customer);
 			} else {
@@ -108,7 +109,7 @@ public class Edit extends HttpServlet {
 		}
 	}
 
-	private void add(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void add(HttpServletRequest req, HttpServletResponse resp,HttpSession session) throws ServletException, IOException {
 
 		String id = req.getParameter("Cid");
 		String FirstName = req.getParameter("First Name");
@@ -121,22 +122,25 @@ public class Edit extends HttpServlet {
 		String Phone = req.getParameter("Phone");
 		Customer customer = new Customer(id, FirstName, LastName, Street, Address, City, State, Email, Phone);
 		int i = customerDAOImpl.addCustomer(customer);
+		session.setAttribute("message", "Customer "+FirstName+" Added Successfully");
 		System.out.println(i);
 		allCustomer = customerDAOImpl.getAllCustomer();
 	}
 
-	private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void delete(HttpServletRequest req, HttpServletResponse resp, HttpSession session) throws ServletException, IOException {
 
 		String id = req.getParameter("id");
 		customerDAOImpl = new CustomerDAOImpl();
+		Customer customerById = customerDAOImpl.getCustomerById(id);
 		int i = customerDAOImpl.deleteCustomer(id);
 		System.out.println(i);
 		allCustomer = customerDAOImpl.getAllCustomer();
+		session.setAttribute("message", "Customer "+customerById.getFname()+" Updated Successfully");
 
 //		req.getRequestDispatcher("home.jsp").include(req, resp);
 	}
 
-	private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void update(HttpServletRequest req, HttpServletResponse resp,HttpSession session) throws ServletException, IOException {
 
 		String FirstName = req.getParameter("First Name");
 		String LastName = req.getParameter("Last Name");
@@ -150,6 +154,7 @@ public class Edit extends HttpServlet {
 		Customer customer = new Customer(id, FirstName, LastName, Street, Address, City, State, Email, Phone);
 		int i = customerDAOImpl.updateCustomer(customer);
 		allCustomer = customerDAOImpl.getAllCustomer();
+		session.setAttribute("message", "Customer "+FirstName+" Updated Successfully");
 //		req.getRequestDispatcher("home.jsp").include(req, resp);
 	}
 
@@ -158,6 +163,7 @@ public class Edit extends HttpServlet {
 		System.out.println(id);
 		Customer customer = customerDAOImpl.getCustomerById(id);
 //	System.out.println(customer);
+		
 		req.setAttribute("customer", customer);
 		req.getRequestDispatcher("editCustomer.jsp").forward(req, resp);
 	}
