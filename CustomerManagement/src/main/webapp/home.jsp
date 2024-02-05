@@ -56,7 +56,7 @@
 		<form action="edit">
 			<input type="hidden" name="action" value="search"> <select
 				id="search-dropdown" name="searchby" onchange="showSearchBox()">
-				<option value="" selected disabled>Select Search By</option>
+				<option value="" >Select Search By</option>
 				<option value="First Name">First Name</option>
 				<option value="City">City</option>
 				<option value="Email">Email</option>
