@@ -53,7 +53,7 @@ public class Edit extends HttpServlet {
 			} else if (action.equals("Add")) {
 				add(req, resp, session);
 			} else if (action.equals("search")) {
-				search(req, resp);
+				search(req, resp, session);
 			} else if (action.equals("sync")) {
 				sync(session);
 			}
@@ -90,22 +90,48 @@ public class Edit extends HttpServlet {
 		allCustomer = customerDAOImpl.getAllCustomer();
 	}
 
-	private void search(HttpServletRequest req, HttpServletResponse resp) {
+	private void search(HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
 
 		String searchby = req.getParameter("searchby");
 		String searchInput = req.getParameter("searchInput");
-		System.out.println(searchInput + searchby);
 		if (searchby.equals("First Name")) {
 
 			allCustomer = customerDAOImpl.getCustomerByFirstName(searchInput);
-		} else if (searchby.equals("City")) {
+			if (allCustomer.isEmpty() || allCustomer == null) {
+				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
+			}
+			else {
+				session.setAttribute("message","");
+			}
 
+		} else if (searchby.equals("City")) {
 			allCustomer = customerDAOImpl.getCustomerByCity(searchInput);
+			if (allCustomer.isEmpty() || allCustomer == null) {
+				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
+			}
+			else {
+				System.out.println(allCustomer.get(1).getCity());
+				session.setAttribute("message","");
+			}
 
 		} else if (searchby.equals("Email")) {
 			allCustomer = customerDAOImpl.getCustomerByEmail(searchInput);
+			if (allCustomer.isEmpty() || allCustomer == null) {
+				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
+			}
+			else {
+				session.setAttribute("message","");
+			}
+
 		} else if (searchby.equals("Phone")) {
 			allCustomer = customerDAOImpl.getCustomerByPhone(searchInput);
+			if (allCustomer.isEmpty() || allCustomer == null) {
+				session.setAttribute("message"," No such " + searchby + " number exist please try with different " + searchby + " number");
+			}
+			else {
+				session.setAttribute("message","");
+			}
+
 		}
 	}
 
@@ -124,13 +150,12 @@ public class Edit extends HttpServlet {
 		Customer customer = new Customer(id, FirstName, LastName, Street, Address, City, State, Email, Phone);
 		int i = customerDAOImpl.addCustomer(customer);
 		if (i == 0) {
-			session.setAttribute("message", "Some technical issue please after some time");
-		}
-		else {
-			
-		System.out.println(i);
-		allCustomer = customerDAOImpl.getAllCustomer();
-		session.setAttribute("message", "Customer " + FirstName+ " Added Successfully");
+			session.setAttribute("message", " We have Some technical issue please try after some time");
+		} else {
+
+			System.out.println(i);
+			allCustomer = customerDAOImpl.getAllCustomer();
+			session.setAttribute("message", "Customer " + FirstName + " Added Successfully");
 		}
 	}
 
@@ -143,12 +168,11 @@ public class Edit extends HttpServlet {
 		int i = customerDAOImpl.deleteCustomer(id);
 		if (i == 0) {
 			session.setAttribute("message", "Customer dosen't exist please refresh it");
-		}
-		else {
-			
-		System.out.println(i);
-		allCustomer = customerDAOImpl.getAllCustomer();
-		session.setAttribute("message", "Customer " + customerById.getFname() + " Deleted Successfully");
+		} else {
+
+			System.out.println(i);
+			allCustomer = customerDAOImpl.getAllCustomer();
+			session.setAttribute("message", "Customer " + customerById.getFname() + " Deleted Successfully");
 		}
 
 //		req.getRequestDispatcher("home.jsp").include(req, resp);
@@ -170,12 +194,11 @@ public class Edit extends HttpServlet {
 		int i = customerDAOImpl.updateCustomer(customer);
 		if (i == 0) {
 			session.setAttribute("message", "Customer dosen't exist please refresh it");
-		}
-		else {
-			
-		System.out.println(i);
-		allCustomer = customerDAOImpl.getAllCustomer();
-		session.setAttribute("message", "Customer " + FirstName+ " Updated Successfully");
+		} else {
+
+			System.out.println(i);
+			allCustomer = customerDAOImpl.getAllCustomer();
+			session.setAttribute("message", "Customer " + FirstName + " Updated Successfully");
 		}
 	}
 

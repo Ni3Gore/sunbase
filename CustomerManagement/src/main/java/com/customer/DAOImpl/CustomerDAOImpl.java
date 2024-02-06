@@ -19,8 +19,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	static final String DELETE_QUERY = "DELETE FROM `customer_details` WHERE (`id`=?)";
 	static final String SELECT_QUERY = "SELECT * from `customer_details` ";
 	static final String SELECT_QUERY1 = "SELECT * from `customer_details` where `fname` Like ? ";
-	static final String SELECT_QUERY2 = "SELECT * from `customer_details` where `city`Like ? ";
-	static final String SELECT_QUERY3 = "SELECT * from `customer_details` where `email`Like ? ";
+	static final String SELECT_QUERY2 = "SELECT * from `customer_details` where `city` Like ? ";
+	static final String SELECT_QUERY3 = "SELECT * from `customer_details` where `email` Like ? ";
 	static final String SELECT_QUERY4 = "SELECT * from `customer_details` where `phone` Like ? ";
 	static final String SELECT_QUERY5 = "SELECT * from `customer_details` where `id` = ? ";
 
@@ -120,7 +120,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 						res.getString("street"),res.getString("address"), res.getString("city"), res.getString("state"), res.getString("email"),
 						res.getString("phone"));
 				
-				System.out.println(res.getString("fname"));
 				list.add(customer);
 			}
 		} catch (SQLException e) {
@@ -144,6 +143,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 						res.getString("street"),res.getString("address"), res.getString("city"), res.getString("state"), res.getString("email"),
 						res.getString("phone"));
 				
+				System.out.println(res.getString("city"));
 				list.add(customer);
 			}
 		} catch (SQLException e) {
