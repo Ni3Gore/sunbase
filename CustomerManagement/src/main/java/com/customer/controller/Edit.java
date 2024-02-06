@@ -123,9 +123,15 @@ public class Edit extends HttpServlet {
 		String Phone = req.getParameter("Phone");
 		Customer customer = new Customer(id, FirstName, LastName, Street, Address, City, State, Email, Phone);
 		int i = customerDAOImpl.addCustomer(customer);
-		session.setAttribute("message", "Customer " + FirstName + " Added Successfully");
+		if (i == 0) {
+			session.setAttribute("message", "Some technical issue please after some time");
+		}
+		else {
+			
 		System.out.println(i);
 		allCustomer = customerDAOImpl.getAllCustomer();
+		session.setAttribute("message", "Customer " + FirstName+ " Added Successfully");
+		}
 	}
 
 	private void delete(HttpServletRequest req, HttpServletResponse resp, HttpSession session)
