@@ -13,11 +13,11 @@
 	<h2>Customer List</h2>
 	<%
 	String message = (String)session.getAttribute("message");
-	if(message!=null && message.isEmpty()){
+	if(message!=null && !message.isEmpty()){
 		%>
-		<h3><%=message %></h3>
+		<h3 style="color: blue"><%=message %></h3>
 		<%
-	}
+	}message = null;
 	%>
 
 	<%
@@ -66,24 +66,7 @@
 				<input type="submit" value="Search">
 		</form>
 	</div>
-<script>
-		function showSearchBox() {
-			var selectedOption = document.getElementById("search-dropdown").value;
-			var searchInput = document.getElementById("search-input");
-			var button = document.getElementById("search-submit-btn");
 
-			if (selectedOption !== "") {
-				searchInput.style.display = "inline-block";
-				searchInput.placeholder = "Enter " + selectedOption
-						+ " to search";
-				button.style.display = "inline-block";
-			} else {
-				searchInput.style.display = "none";
-				button.style.display = "none";
-			}
-
-		}
-	</script>
 	<table>
 		<tr>
 			

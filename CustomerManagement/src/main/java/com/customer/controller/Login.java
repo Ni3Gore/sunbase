@@ -42,7 +42,7 @@ public class Login extends HttpServlet {
 			
 			session.setAttribute("error message", "Entered Credentials are Invalid");
 			System.out.println("error message");
-			req.getRequestDispatcher("Login.jsp").forward(req, resp);
+			req.getRequestDispatcher("Login.jsp").include(req, resp);
 		}
 	}
 
