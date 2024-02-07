@@ -16,8 +16,7 @@ public class J2EEHttpPost {
 			// Specify the login credentials
 			String loginId = "test@sunbasedata.com";
 			String password = "Test@123";
-			// Specify the endpoint URL
-			String url = "https://qa.sunbasedata.com/sunbase/portal/api/assignment_auth.jsp";
+			
 
 			// Make a POST request with the credentials
 			String response = sendPostRequest(loginId, password);

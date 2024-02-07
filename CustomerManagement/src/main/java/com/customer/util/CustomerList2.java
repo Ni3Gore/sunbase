@@ -11,7 +11,7 @@ public class CustomerList2 {
 
 	public static void main(String[] args) {
 		// Specify the bearer token received from the authentication API call
-    	String bearerToken = "dGVzdEBzdW5iYXNlZGF0YS5jb206VGVzdEAxMjM=";
+    	String bearerToken="";
 		getcustomerList(bearerToken);
 	}
 

@@ -17,7 +17,7 @@
 		%>
 		<h3 style="color: blue"><%=message %></h3>
 		<%
-	}message = null;
+	}session.setAttribute("message",null);
 	%>
 
 	<%

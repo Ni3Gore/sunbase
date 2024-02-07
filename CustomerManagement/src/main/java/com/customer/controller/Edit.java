@@ -100,37 +100,28 @@ public class Edit extends HttpServlet {
 			if (allCustomer.isEmpty() || allCustomer == null) {
 				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
 			}
-			else {
-				session.setAttribute("message","");
-			}
+			
 
 		} else if (searchby.equals("City")) {
 			allCustomer = customerDAOImpl.getCustomerByCity(searchInput);
 			if (allCustomer.isEmpty() || allCustomer == null) {
 				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
 			}
-			else {
-				System.out.println(allCustomer.get(1).getCity());
-				session.setAttribute("message","");
-			}
+			
 
 		} else if (searchby.equals("Email")) {
 			allCustomer = customerDAOImpl.getCustomerByEmail(searchInput);
 			if (allCustomer.isEmpty() || allCustomer == null) {
 				session.setAttribute("message"," No such " + searchby + " exist please try with different " + searchby);
 			}
-			else {
-				session.setAttribute("message","");
-			}
+			
 
 		} else if (searchby.equals("Phone")) {
 			allCustomer = customerDAOImpl.getCustomerByPhone(searchInput);
 			if (allCustomer.isEmpty() || allCustomer == null) {
 				session.setAttribute("message"," No such " + searchby + " number exist please try with different " + searchby + " number");
 			}
-			else {
-				session.setAttribute("message","");
-			}
+			
 
 		}
 	}
